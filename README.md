@@ -44,7 +44,6 @@ src/
             └── InventoryController.java
 ```
 
-
 ## Modelos de Datos
 
 - **Item**: Representa un elemento en el inventario.
@@ -68,9 +67,12 @@ src/
   - `removeItem`: Elimina un elemento del inventario.
   - `updateItemQuantity`: Actualiza la cantidad de un elemento.
   - `updateItemDescription`: Actualiza la descripción de un elemento.
+  - `updateItemCategory`: Actualiza la categoría de un elemento.
   - `showInventory`: Devuelve la lista actual de elementos en el inventario.
   - `showHistory`: Muestra el historial de cambios.
   - `searchByCategory`: Busca elementos por categoría.
+  - `searchByDescription`: Busca elementos por descripcion.
+  - `searchByName`: Busca elementos por nombre.
 
 ## Controladores
 
@@ -84,9 +86,14 @@ src/
 | DELETE | `/inventory/remove`              | Elimina un elemento del inventario              |
 | PUT    | `/inventory/updateQuantity`      | Actualiza la cantidad de un elemento            |
 | PUT    | `/inventory/updateDescription`   | Actualiza la descripción de un elemento         |
+| PUT    | `/inventory/updateCategory`      | Actualiza la categoría de un elemento           |
 | GET    | `/inventory/show`                | Muestra todos los elementos del inventario      |
 | GET    | `/inventory/history`             | Muestra el historial de cambios                 |
 | GET    | `/inventory/searchByCategory`    | Busca elementos por categoría                   |
+| GET    | `/inventory/searchByDescription` | Busca elementos por descripción                 |
+| GET    | `/inventory/searchByName`        | Busca elementos por nombre                      |
+
+
 
 ### Ejemplo de Pruebas en Insomnia
 
