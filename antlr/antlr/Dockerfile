@@ -1,41 +1,19 @@
-# Start with a base image containing Java runtime
-FROM openjdk:21-jdk-alpine
-
-# Add Maintainer Info
-LABEL maintainer="adsoft@live.com.mx"
-
-# Add a volume pointing to /tmp
-VOLUME /tmp
-
-# Make port 8080 available to the world outside this container
-EXPOSE 8192
-
-# The application's jar file
-ARG JAR_FILE=target/antlr-0.0.1-SNAPSHOT.jar
-
-# Add the application's jar to the container
-ADD ${JAR_FILE} antlr-api.jar
-
-# Run the jar file 
-ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/antlr-api.jar"]
-
-# docker build
-# sudo docker build -t <dockerhub-user>/ng5-api .
-
-# docker run
-# sudo docker run --name <linuxuser>-api -p 8xxx:8080 -d <dockerhub-user>/ng5-api  
-
-# Usar una imagen base con JDK 21
+# Usa la imagen base de OpenJDK 21
 FROM openjdk:21-jdk-slim
 
-# Crear directorio para la app
+# Establece el directorio de trabajo en el contenedor
 WORKDIR /app
 
-# Copiar el jar
-COPY target/tu_paquete-0.0.1-SNAPSHOT.jar app.jar
+# Copia el archivo pom.xml y el directorio src en el contenedor
+COPY pom.xml .
+COPY src ./src
 
-# Exponer el puerto
+# Instala Maven y compila el proyecto
+RUN apt-get update && apt-get install -y maven
+RUN mvn clean package -DskipTests
+
+# Exponer el puerto 8080 para acceder a la aplicación
 EXPOSE 8080
 
-# Ejecutar la aplicación
-ENTRYPOINT ["java", "-jar", "app.jar"]
+# Comando para ejecutar la aplicación
+CMD ["java", "-jar", "target/antlr-0.0.1-SNAPSHOT.jar"]
