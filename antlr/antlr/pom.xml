@@ -1,0 +1,100 @@
+
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>3.3.5</version>
+        <relativePath />
+    </parent>
+    <groupId>com.inventory</groupId>
+    <artifactId>antlr</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>antlr</name>
+    <description>Demo project for Spring Boot</description>
+    <properties>
+        <java.version>21</java.version>
+    </properties>
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- Dependencia de ANTLR para ejecutar el runtime en tu código -->
+        <dependency>
+            <groupId>org.antlr</groupId>
+            <artifactId>antlr4-runtime</artifactId>
+            <version>4.13.2</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <!-- Plugin para Spring Boot -->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            
+            <!-- Plugin para ANTLR -->
+            <plugin>
+                <groupId>org.antlr</groupId>
+                <artifactId>antlr4-maven-plugin</artifactId>
+                <version>4.9.2</version>
+                <executions>
+                    <execution>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>antlr4</goal>
+                        </goals>
+                        <configuration>
+							<!-- Cambia el directorio de salida para que esté en la estructura de tu proyecto -->
+							<outputDirectory>${project.basedir}/src/main/java/com/inventory/antlr/parser</outputDirectory>
+							<!-- Directorio de los archivos .g4 -->
+							<sourceDirectory>${project.basedir}/src/main/antlr</sourceDirectory>
+						</configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+			<plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.0.0</version>
+                <executions>
+                    <execution>
+                        <id>delete-antlr-files</id>
+                        <phase>clean</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <executable>cmd</executable>
+                            <arguments>
+                                <argument>/c</argument>
+                                <argument>del</argument>
+                                <argument>/f</argument>
+                                <argument>/q</argument>
+                                <argument>${project.basedir}\src\main\java\com\inventory\antlr\inventory*.interp</argument>
+                                <argument>${project.basedir}\src\main\java\com\inventory\antlr\inventory*.tokens</argument>
+                                <argument>${project.basedir}\src\main\java\com\inventory\antlr\inventory*.java</argument>
+
+                            </arguments>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+        </plugins>
+    </build>
+</project>
