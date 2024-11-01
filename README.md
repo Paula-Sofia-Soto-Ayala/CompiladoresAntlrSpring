@@ -95,15 +95,54 @@ src/
 
 
 
-### Ejemplo de Pruebas en Insomnia
+### Ejemplo de Pruebas en Insomnia/Endpoints
 
 - **Agregar un Elemento**  
   - URL: `http://localhost:8080/inventory/add`
   - Método: `POST`
-  - Parámetros de Consulta: `name=Item1&quantity=10&description=Descripción1&category=Categoría1`
+  - Parámetros de Consulta: `http://localhost:8080/inventory/add?name=Item1&quantity=10&description=Descripción1&category=Categoría1`
+
+- **Eliminar un Elemento**  
+  - URL: `http://localhost:8080/inventory/remove`
+  - Método: `DELETE`
+  - Parámetros de Consulta: `http://localhost:8080/inventory/remove?name=Item1`
+
+- **Actualizar Cantidad de un Elemento**  
+  - URL: `http://localhost:8080/inventory/updateQuantity`
+  - Método: `PUT`
+  - Parámetros de Consulta: `http://localhost:8080/inventory/updateQuantity?name=Item1&quantity=20`
+
+- **Actualizar Descripción de un Elemento**  
+  - URL: `http://localhost:8080/inventory/updateDescription`
+  - Método: `PUT`
+  - Parámetros de Consulta: `http://localhost:8080/inventory/updateDescription?name=Item1&newDescription=NuevaDescripción`
+
+- **Actualizar Categoría de un Elemento**  
+  - URL: `http://localhost:8080/inventory/updateCategory`
+  - Método: `PUT`
+  - Parámetros de Consulta: `http://localhost:8080/inventory/updateCategory?name=Item1&newCategory=NuevaCategoría`
+
+- **Buscar Elemento por Categoría**  
+  - URL: `http://localhost:8080/inventory/searchByCategory`
+  - Método: `GET`
+  - Parámetros de Consulta: `http://localhost:8080/inventory/searchByCategory?category=Categoría1`
+
+- **Buscar Elemento por Descripción**  
+  - URL: `http://localhost:8080/inventory/searchByDescription`
+  - Método: `GET`
+  - Parámetros de Consulta: `http://localhost:8080/inventory/searchByDescription?description=Descripción1`
+
+- **Buscar Elemento por Nombre**   
+  - URL: `http://localhost:8080/inventory/searchByName`
+  - Método: `GET`
+  - Parámetros de Consulta: `http://localhost:8080/inventory/searchByName?name=Nombre1`
 
 - **Mostrar Inventario**  
   - URL: `http://localhost:8080/inventory/show`
+  - Método: `GET`
+
+- **Mostrar Historial**  
+  - URL: `http://localhost:8080/inventory/history`
   - Método: `GET`
 
 ## Instalación y Ejecución
@@ -119,4 +158,49 @@ src/
 
    ```bash
    ./mvnw spring-boot:run
+   ```
+
+## Dockerización y Publicación en Docker Hub
+- **Construir imagen de docker**
+```txt
+docker build -t nombre_usuario/inventory-app .
+
+(ejemplo: 
+docker build -t nombre_usuario/inventory-app .)
+```
+
+- **Crear y ejecutar contenedor**
+```txt
+docker run -p 8080:8080 --name <nombre-contenedor> <nombre-de-imagen>
+
+(ejemplo: 
+docker run -p 8080:8080 --name inventory-container nombre_usuario/inventory-app)
+```
+
+- **Acceder al contenedor en ejecución**
+```txt
+docker exec -it <nombre-contenedor> /bin/bash
+```
+
+- **Etiquetar y Publicar la imagen en DockerHub**
+```txt
+docker login
+docker tag <nombre-de-imagen> <usuario-dockerhub>/<nombre-de-imagen>:latest
+docker push <usuario-dockerhub>/<nombre-de-imagen>:latest
+
+(ejemplo:
+docker tag nombre_usuario/inventory-app nombre_usuario/inventory-app:latest
+docker push nombre_usuario/inventory-app:latest)
+```
+
+### Otros Comandos Útiles
+
+- **Iniciar un contenedor detenido**
+```txt
+docker start <nombre-contenedor>
+```
+- **Detener un contenedor en ejecución**
+```txt
+docker stop <nombre-contenedor>
+```
 
