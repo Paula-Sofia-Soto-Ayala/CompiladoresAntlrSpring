@@ -6,9 +6,11 @@ import org.springframework.web.bind.annotation.*;
 import com.inventory.antlr.model.Change;
 import com.inventory.antlr.model.Item;
 import com.inventory.antlr.service.InventoryService;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import java.util.List;
 
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/inventory")
 public class InventoryController {
